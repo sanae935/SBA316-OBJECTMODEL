@@ -1,79 +1,86 @@
 // Cache elements using selectElementById and querySelector
-const header = document.getElementById('header');
-const navLinks = document.querySelectorAll('.nav a');
-const searchInput = document.querySelector('input[type="search"]');
+document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('header');
+    const navLinks = document.querySelectorAll('.nav a'); 
+    const searchInputs = document.querySelectorAll('input[type="search"]');
 
-// Use parent-child-sibling relationship to navigate elements
-const firstNavLink = navLinks[0];
-const lastNavLink = navLinks[navLinks.length - 1];
-const headerTitle = header.firstChild;
+    console.log(navLinks); 
+    // Ensure headerTitle is selected correctly
+    const headerTitle = header.querySelector('h1');
 
-// Iterate over elements to accomplish a task
-navLinks.forEach((link) => {
-	link.addEventListener('click', (e) => {
-		// Modify HTML content in response to user interaction
-		headerTitle.textContent = `You clicked on ${link.textContent}`;
-	});
-});
+    // Only proceed if navLinks has elements
+    if (navLinks.length > 0) {
+        // Use event delegation for navigation links
+        navLinks.forEach((link) => {
+            link.addEventListener('click', (e) => {
+                headerTitle.textContent = `You clicked on ${link.textContent}`;
+            });
+        });
 
-// Create a new element using createElement
-const newNavLink = document.createElement('li');
-const newLink = document.createElement('a');
-newLink.textContent = 'New Destination';
-newNavLink.appendChild(newLink);
+        // Create a new element using createElement
+        const newNavLink = document.createElement('li');
+        const newLink = document.createElement('a');
+        newLink.textContent = 'New Destination';
+        newNavLink.appendChild(newLink);
+        navLinks[0].parentNode.appendChild(newNavLink); 
 
-// Add new elements to the DOM using appendChild and prepend
-navLinks[0].parentNode.appendChild(newNavLink);
+        // Use DocumentFragment to create templated content
+        const fragment = document.createDocumentFragment();
+        const templateLink = document.createElement('li');
+        const templateAnchor = document.createElement('a');
+        templateAnchor.textContent = 'Template Link';
+        templateAnchor.href = '#';
+        templateLink.appendChild(templateAnchor);
+        fragment.appendChild(templateLink);
+        navLinks[0].parentNode.appendChild(fragment); 
+    } else {
+        console.error('No navigation links found.');
+    }
 
-// Use DocumentFragment to create templated content
-const fragment = document.createDocumentFragment();
-const template = '<li><a href="#">Template Link</a></li>';
-fragment.innerHTML = template;
-navLinks[0].parentNode.appendChild(fragment);
+    // Modify style and CSS classes in response to user interaction
+    header.addEventListener('mouseover', () => {
+        header.classList.add('hover');
+    });
+    header.addEventListener('mouseout', () => {
+        header.classList.remove('hover');
+    });
 
-// Modify style and CSS classes in response to user interaction
-header.addEventListener('mouseover', () => {
-	header.classList.add('hover');
-});
-header.addEventListener('mouseout', () => {
-	header.classList.remove('hover');
-});
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+        });
+    } else {
+        console.error('Form not found');
+    }
 
-// Modify attributes in response to user interaction
-searchInput.addEventListener('input', (e) => {
-	const searchTerm = e.target.value;
-	// Do something with the search term
-});
+    
+    console.log(window.location.href);
 
-// Register event listeners and create event handler functions
-const form = document.querySelector('form');
-form.addEventListener('submit', (e) => {
-	e.preventDefault();
-	// Do something with the form data
-});
+    
+    searchInputs.forEach((input) => {
+        input.addEventListener('input', (e) => {
+            const searchTerm = e.target.value;
+            console.log(`Searching for: ${searchTerm}`);
+        });
+    });
 
-// Use Browser Object Model (BOM) properties and methods
-const currentUrl = window.location.href;
-console.log(currentUrl);
+    // Email validation
+    const emailInput = document.querySelector('input[name="email"]');
+    if (emailInput) {
+        emailInput.addEventListener('input', (e) => {
+            const emailValue = e.target.value;
+            console.log(emailValue.includes('@') ? 'Valid email' : 'Invalid email');
+        });
+    }
 
-// Include form and input with HTML attribute validation
-const emailInput = document.querySelector('input[type="email"]');
-emailInput.addEventListener('input', (e) => {
-	const emailValue = e.target.value;
-	if (emailValue.includes('@')) {
-		console.log('Valid email');
-	} else {
-		console.log('Invalid email');
-	}
-});
-
-// Include form and input with DOM event-based validation
-const passwordInput = document.querySelector('input[type="password"]');
-passwordInput.addEventListener('input', (e) => {
-	const passwordValue = e.target.value;
-	if (passwordValue.length >= 8) {
-		console.log('Strong password');
-	} else {
-		console.log('Weak password');
-	}
+    // Password validation
+    const passwordInput = document.querySelector('input[name="password"]');
+    if (passwordInput) {
+        passwordInput.addEventListener('input', (e) => {
+            const passwordValue = e.target.value;
+            console.log(passwordValue.length >= 8 ? 'Strong password' : 'Weak password');
+        });
+    }
 });
