@@ -5,12 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInputs = document.querySelectorAll('input[type="search"]');
 
     console.log(navLinks); 
-    // Ensure headerTitle is selected correctly
     const headerTitle = header.querySelector('h1');
-
-    // Only proceed if navLinks has elements
     if (navLinks.length > 0) {
-        // Use event delegation for navigation links
         navLinks.forEach((link) => {
             link.addEventListener('click', (e) => {
                 headerTitle.textContent = `You clicked on ${link.textContent}`;
